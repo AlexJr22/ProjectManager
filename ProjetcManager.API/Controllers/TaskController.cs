@@ -20,10 +20,11 @@ public class TasksController(IUnitOfWork unitOfWork)
         return Ok(tasks);
     }
 
-    [HttpGet("GetTaskById")]
+    [HttpGet("GetTaskById/Id/{id:int}", Name = "GetById")]
     public async Task<ActionResult<TaskDTO>> GetTaskById(int id)
     {
-        var taskModel = await _unitOfWork.TaskRepository.GetAsync(task => task.Id == id);
+        var taskModel = await _unitOfWork
+            .TaskRepository.GetAsync(task => task.Id == id);
 
         if (taskModel is not null)
         {
@@ -34,13 +35,15 @@ public class TasksController(IUnitOfWork unitOfWork)
         return NotFound();
     }
 
-    [HttpGet("GetTaskByName")]
-    public async Task<ActionResult<IEnumerable<TaskDTO>>> GetTaskByName(string? taskName)
+    [HttpGet("GetTaskByName/src/{taskName}")]
+    public async Task<ActionResult<IEnumerable<TaskDTO>>> GetTaskByName(string taskName)
     {
-        TaskModel? task = await _unitOfWork.TaskRepository.GetAsync(task => task.TaskName == taskName);
 
-        if (task is not null)
-            return Ok(task.ToTaskDTO());
+        IEnumerable<TaskModel>? tasks = await _unitOfWork.TaskRepository.GetByNameAsync(
+            tasks => tasks.TaskName!.Contains(taskName));
+
+        if (tasks is not null)
+            return Ok(tasks.ToListTaskDTO());
 
         return NotFound($"Could't find the task '{taskName}'");
     }
@@ -56,7 +59,41 @@ public class TasksController(IUnitOfWork unitOfWork)
         _unitOfWork.TaskRepository.Create(taskModel);
         await _unitOfWork.CommitAsync();
 
-        return Ok(newTaskDTO);
+        newTaskDTO = taskModel.ToTaskDTO();
+
+        return CreatedAtRoute(
+            "GetById",
+            new { id = newTaskDTO.Id },
+            newTaskDTO
+        );
     }
 
+    [HttpPut("UpdateTask/Id/{id:int}")]
+    public async Task<ActionResult> UpdateTaskById(int id, TaskDTO updatedTask)
+    {
+        if (updatedTask is null)
+            return BadRequest($"Could't to update the task of Id='{id}'");
+
+        var UpdatedTask = updatedTask.ToTaskModel();
+
+        _unitOfWork.TaskRepository.Update(UpdatedTask);
+        await _unitOfWork.CommitAsync();
+
+        return Created();
+    }
+
+    [HttpDelete("DeleteTask/id/{id:int}")]
+    public async Task<ActionResult> DeleteTask(int id)
+    {
+        var taskModel = await _unitOfWork.TaskRepository
+            .GetAsync(task => task.Id == id);
+
+        if (taskModel is null)
+            return Ok("Task Deleted!");
+
+        _unitOfWork.TaskRepository.Delete(taskModel);
+        await _unitOfWork.CommitAsync();
+
+        return Ok($"Task of id={taskModel.Id} was deleted with success!");
+    }
 }
