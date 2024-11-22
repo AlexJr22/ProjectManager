@@ -14,9 +14,9 @@ public class TasksController(IUnitOfWork unitOfWork)
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     [HttpGet("GetAll", Name = "GetAll")]
-    public async Task<ActionResult<IEnumerable<TaskDTO>>> GetAllTasks()
+    public async Task<ActionResult<IEnumerable<TaskDTO>>> GetAll()
     {
-        var tasks = await _unitOfWork.TaskRepository.GetAllTask();
+        var tasks = await _unitOfWork.TaskRepository.GetAll();
         return Ok(tasks);
     }
 
@@ -71,12 +71,12 @@ public class TasksController(IUnitOfWork unitOfWork)
     [HttpPut("UpdateTask/Id/{id:int}")]
     public async Task<ActionResult> UpdateTaskById(int id, TaskDTO updatedTask)
     {
-        if (updatedTask is null)
+        if (updatedTask.Id != id)
             return BadRequest($"Could't to update the task of Id='{id}'");
 
         var UpdatedTask = updatedTask.ToTaskModel();
 
-        _unitOfWork.TaskRepository.Update(UpdatedTask);
+        var newTask = _unitOfWork.TaskRepository.Update(UpdatedTask);
         await _unitOfWork.CommitAsync();
 
         return Created();

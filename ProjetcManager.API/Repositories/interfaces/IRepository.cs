@@ -4,7 +4,7 @@ namespace ProjetcManager.API;
 
 public interface IRepository<T>
 {
-    Task<IEnumerable<T>> GetAllTask();
+    Task<IEnumerable<T>> GetAll();
     Task<T?> GetAsync(Expression<Func<T, bool>> predicate);
     Task<List<T>> GetByNameAsync(Expression<Func<T, bool>> predicate);
     T Create(T Entity);

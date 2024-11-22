@@ -7,8 +7,8 @@ namespace ProjetcManager.API.Repositories
 {
     public class Repository<T>(AppDbContext context) : IRepository<T> where T : class
     {
-        private readonly AppDbContext _context = context;
-        public async Task<IEnumerable<T>> GetAllTask()
+        protected readonly AppDbContext _context = context;
+        public async Task<IEnumerable<T>> GetAll()
         {
             var AllTask = await _context.Set<T>().AsNoTracking().ToListAsync();
 
@@ -19,6 +19,7 @@ namespace ProjetcManager.API.Repositories
         {
             return await _context.Set<T>().FirstOrDefaultAsync(expression);
         }
+
         public async Task<List<T>> GetByNameAsync(Expression<Func<T, bool>> expression)
         {
             return await _context.Set<T>().Where<T>(expression).ToListAsync();
