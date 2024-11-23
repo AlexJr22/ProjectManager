@@ -45,11 +45,11 @@ public class TasksController(IUnitOfWork unitOfWork)
         if (tasks is not null)
             return Ok(tasks.ToListTaskDTO());
 
-        return NotFound($"Could't find the task '{taskName}'");
+        return NotFound($"Could't find the task {taskName}");
     }
 
     [HttpPost("Creating")]
-    public async Task<ActionResult<TaskDTO>> CreatingANewTask(TaskDTO newTaskDTO)
+    public async Task<ActionResult<TaskDTO>> CreatingANewTask(CreatingTaskDTO newTaskDTO)
     {
         if (newTaskDTO is null)
             return BadRequest("Invalid Request");
@@ -59,12 +59,12 @@ public class TasksController(IUnitOfWork unitOfWork)
         _unitOfWork.TaskRepository.Create(taskModel);
         await _unitOfWork.CommitAsync();
 
-        newTaskDTO = taskModel.ToTaskDTO();
+        var newTask = taskModel.ToTaskDTO();
 
         return CreatedAtRoute(
             "GetById",
-            new { id = newTaskDTO.Id },
-            newTaskDTO
+            new { id = taskModel.Id },
+            newTask
         );
     }
 

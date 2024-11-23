@@ -17,6 +17,19 @@ public static class TaskMapping
             ProjectId = taskDTO.ProjectId,
         };
     }
+    
+    public static TaskModel ToTaskModel(this CreatingTaskDTO taskDTO)
+    {
+        ArgumentNullException.ThrowIfNull(taskDTO);
+
+        return new TaskModel()
+        {
+            TaskName = taskDTO.TaskName,
+            TaskDescription = taskDTO.TaskDescription,
+            TaskStatus = taskDTO.TaskStatus,
+            ProjectId = taskDTO.ProjectId,
+        };
+    }
 
     public static TaskDTO ToTaskDTO(this TaskModel taskModel)
     {
