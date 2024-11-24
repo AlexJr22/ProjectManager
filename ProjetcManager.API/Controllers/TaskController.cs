@@ -17,7 +17,8 @@ public class TasksController(IUnitOfWork unitOfWork)
     public async Task<ActionResult<IEnumerable<TaskDTO>>> GetAll()
     {
         var tasks = await _unitOfWork.TaskRepository.GetAll();
-        return Ok(tasks);
+
+        return Ok(tasks.ToListTaskDTO());
     }
 
     [HttpGet("GetTaskById/Id/{id:int}", Name = "GetById")]
@@ -63,7 +64,7 @@ public class TasksController(IUnitOfWork unitOfWork)
 
         return CreatedAtRoute(
             "GetById",
-            new { id = taskModel.Id },
+            new { id = newTask.Id },
             newTask
         );
     }
@@ -72,7 +73,7 @@ public class TasksController(IUnitOfWork unitOfWork)
     public async Task<ActionResult> UpdateTaskById(int id, TaskDTO updatedTask)
     {
         if (updatedTask.Id != id)
-            return BadRequest($"Could't to update the task of Id='{id}'");
+            return BadRequest($"Could't to update the task of Id={id}");
 
         var UpdatedTask = updatedTask.ToTaskModel();
 

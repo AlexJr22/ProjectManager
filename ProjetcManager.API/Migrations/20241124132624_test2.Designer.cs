@@ -11,8 +11,8 @@ using ProjetcManager.API.Data;
 namespace ProjetcManager.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241120130741_InitialTest")]
-    partial class InitialTest
+    [Migration("20241124132624_test2")]
+    partial class test2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

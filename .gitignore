@@ -484,6 +484,6 @@ $RECYCLE.BIN/
 *.swp
 
 # SQLite
-/ProjetcManager.API/SQliteDB
-/ProjetcManager.API/SQliteDB-shm
-/ProjetcManager.API/SQliteDB-wal
+/ProjetcManager.API/SQliteDB.db
+/ProjetcManager.API/SQliteDB.db-shm
+/ProjetcManager.API/SQliteDB.db-wal

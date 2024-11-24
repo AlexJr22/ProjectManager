@@ -26,6 +26,16 @@ public static class ProjectMapping
         };
     }
 
+    public static ProjectModel ToProjectModel(this ProjectDTOCreating projectDTO)
+    {
+        ArgumentNullException.ThrowIfNull(projectDTO);
+
+        return new ProjectModel()
+        {
+            ProjectName = projectDTO.ProjectName
+        };
+    }
+
     public static IEnumerable<ProjectDTO> ToListProjectDTO(this IEnumerable<ProjectModel> projectModelList)
     {
         ArgumentNullException.ThrowIfNull(projectModelList);

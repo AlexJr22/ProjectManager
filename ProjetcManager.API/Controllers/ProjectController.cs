@@ -35,7 +35,7 @@ public class ProjectController(IUnitOfWork unitOfWork) : ControllerBase
     }
 
     [HttpPost("Create")]
-    public async Task<ActionResult<ProjectDTO>> CreatingProject(ProjectDTO projectDTO)
+    public async Task<ActionResult<ProjectDTO>> CreatingProject(ProjectDTOCreating projectDTO)
     {
         if (projectDTO is null)
             return BadRequest();
@@ -45,7 +45,7 @@ public class ProjectController(IUnitOfWork unitOfWork) : ControllerBase
         _unitOfWork.ProjectRepository.Create(projectModel);
         await _unitOfWork.CommitAsync();
 
-        return Ok(projectModel);
+        return Ok(projectModel.ToProjectDTO());
     }
 
     [HttpPut("UpdateProject/Id/{id:int}")]
@@ -60,6 +60,6 @@ public class ProjectController(IUnitOfWork unitOfWork) : ControllerBase
         _unitOfWork.ProjectRepository.Update(project);
         await _unitOfWork.CommitAsync();
 
-        return Ok(project);
+        return Ok(project.ToProjectDTO());
     }
 }
