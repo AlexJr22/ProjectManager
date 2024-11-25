@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProjetcManager.API.DTOs;
 using ProjetcManager.API.DTOs.Mapping;
 using ProjetcManager.API.Models;
@@ -6,6 +7,7 @@ using ProjetcManager.API.Repositories.interfaces;
 
 namespace ProjetcManager.API.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class TasksController(IUnitOfWork unitOfWork)
