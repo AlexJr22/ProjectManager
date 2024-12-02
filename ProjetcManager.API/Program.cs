@@ -1,14 +1,21 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProjetcManager.API;
 using ProjetcManager.API.Data;
+using ProjetcManager.API.Models;
 using ProjetcManager.API.Repositories;
 using ProjetcManager.API.Repositories.interfaces;
+using ProjetcManager.API.Services;
+using ProjetcManager.API.Services.Interfaces;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers();
 
 // swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -42,23 +49,48 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddControllers();
-
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 // authentication services
-builder.Services.AddAuthentication("Bearer").AddJwtBearer();
-
+//builder.Services.AddAuthentication("Bearer").AddJwtBearer();
 
 // Configuring DbContext
+builder.Services
+    .AddIdentity<UserModel, IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
+
 string StringConnection = builder.Configuration.GetConnectionString("SQLite")
     ?? throw new ArgumentException("Invalid String Connection!");
 
 builder.Services.AddDbContext<AppDbContext>(op => op.UseSqlite(StringConnection));
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
+var Key = builder.Configuration["JWT:Key"]
+    ?? throw new ArgumentException("Invalid Secret Key!");
+
+builder.Services.AddAuthentication(op =>
+{
+    op.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    op.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(op => {
+    op.SaveToken = true;
+    op.RequireHttpsMetadata = false;
+    op.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ClockSkew = TimeSpan.Zero,
+        ValidAudience = builder.Configuration["JWT:ValidAudiance"],
+        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes((Key)))
+    };
+});
 
 var app = builder.Build();
 

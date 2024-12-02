@@ -4,7 +4,7 @@ using ProjetcManager.API.Models;
 
 namespace ProjetcManager.API.Data;
 
-public class AppDbContext : IdentityDbContext
+public class AppDbContext : IdentityDbContext<UserModel>
 {
     public AppDbContext(DbContextOptions options) : base(options)
     { }

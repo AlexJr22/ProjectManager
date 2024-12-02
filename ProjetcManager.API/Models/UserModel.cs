@@ -1,6 +1,9 @@
-﻿namespace ProjetcManager.API.Models;
+﻿using Microsoft.AspNetCore.Identity;
 
-public class UserModel
+namespace ProjetcManager.API.Models;
+
+public class UserModel : IdentityUser
 {
-    public IEnumerable<TaskModel>? Tasks { get; set; }
+    public string? RefreshToken { get; set; }
+    public DateTime RefreshTokenExpiryTime { get; set; }
 }
