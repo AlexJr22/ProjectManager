@@ -1,4 +1,4 @@
-﻿using ProjetcManager.API.DTOs.TaskDTO;
+﻿using ProjetcManager.API.DTOs.Task;
 using ProjetcManager.API.Models;
 
 namespace ProjetcManager.API.DTOs.Mapping;

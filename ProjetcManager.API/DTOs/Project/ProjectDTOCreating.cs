@@ -1,4 +1,4 @@
-﻿namespace ProjetcManager.API.DTOs.ProjectDTO;
+﻿namespace ProjetcManager.API.DTOs.Project;
 
 public record class ProjectDTOCreating
 {

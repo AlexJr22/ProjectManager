@@ -1,4 +1,4 @@
-﻿namespace ProjetcManager.API.DTOs.TaskDTO;
+﻿namespace ProjetcManager.API.DTOs.Task;
 
 public class TaskWithProjectDTO
 {

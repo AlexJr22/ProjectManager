@@ -1,7 +1,7 @@
 ﻿using ProjetcManager.API.Models;
 using System.Text.Json.Serialization;
 
-namespace ProjetcManager.API.DTOs.TaskDTO;
+namespace ProjetcManager.API.DTOs.Task;
 
 public record class TaskDTO
 {
