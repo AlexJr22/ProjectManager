@@ -1,11 +1,13 @@
-﻿namespace ProjetcManager.API.DTOs;
+﻿using ProjetcManager.API.Models;
+using System.Text.Json.Serialization;
 
-public class TaskWithProjectDTO
+namespace ProjetcManager.API.DTOs.TaskDTO;
+
+public record class TaskDTO
 {
     public int Id { get; set; }
     public string? TaskName { get; set; }
     public string? TaskDescription { get; set; }
     public bool TaskStatus { get; set; }
     public int? ProjectId { get; set; }
-    public ProjectDTO? Project { get; set; }
 }

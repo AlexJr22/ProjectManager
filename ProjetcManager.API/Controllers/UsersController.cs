@@ -4,20 +4,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetcManager.API.Models;
 
-namespace ProjetcManager.API.Controllers
+namespace ProjetcManager.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class UsersController(UserManager<UserModel> userManager) : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsersController(UserManager<UserModel> userManager) : ControllerBase
+    private readonly UserManager<UserModel> _userManager = userManager;
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<UserModel>>> GetAllUsers(string name)
     {
-        private readonly UserManager<UserModel> _userManager = userManager;
+        var users = await _userManager.Users.ToListAsync();
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserModel>>> GetAllUsers(string name)
-        {
-            var users = await _userManager.Users.ToListAsync();
-
-            return Ok(users);
-        }
+        return Ok(users);
     }
 }

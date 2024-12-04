@@ -1,4 +1,4 @@
-﻿namespace ProjetcManager.API.DTOs;
+﻿namespace ProjetcManager.API.DTOs.TaskDTO.TaskDTO;
 
 public record class CreatingTaskDTO
 {

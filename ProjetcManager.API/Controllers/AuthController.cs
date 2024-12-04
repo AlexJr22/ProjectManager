@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProjetcManager.API.DTOs;
+using ProjetcManager.API.DTOs.TokensDTO;
 using ProjetcManager.API.Models;
 using ProjetcManager.API.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
