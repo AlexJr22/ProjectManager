@@ -7,13 +7,21 @@ using ProjetcManager.API.Repositories.interfaces;
 
 namespace ProjetcManager.API.Controllers;
 
-[Authorize]
+//[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class TasksController(IUnitOfWork unitOfWork)
     : ControllerBase
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
+
+    [HttpGet("GetAllTasksWithProjects")]
+    public async Task<ActionResult<IEnumerable<TaskWithProjectDTO>>> GetAllTasksWithProjects()
+    {
+        var tasks = await _unitOfWork.TaskRepository.GetTaskWithProjects();
+
+        return Ok(tasks.ToListTaskWithProjectDTO());
+    }
 
     [HttpGet("GetAll", Name = "GetAll")]
     public async Task<ActionResult<IEnumerable<TaskDTO>>> GetAll()

@@ -59,6 +59,21 @@ public static class TaskMapping
         });
     }
 
+    public static IEnumerable<TaskWithProjectDTO> ToListTaskWithProjectDTO(this IEnumerable<TaskModel> tasks)
+    {
+        ArgumentNullException.ThrowIfNull(tasks);
+
+        return tasks.Select(t => new TaskWithProjectDTO
+        {
+            Id = t.Id,
+            TaskName = t.TaskName,
+            TaskDescription = t.TaskDescription,
+            TaskStatus = t.TaskStatus,
+            ProjectId = t.ProjectId,
+            Project = t.Project!.ToProjectDTO()
+        });
+    }
+
     public static IEnumerable<TaskModel> ToListTaskModel(this IEnumerable<TaskDTO> tasks)
     {
         ArgumentNullException.ThrowIfNull(tasks);

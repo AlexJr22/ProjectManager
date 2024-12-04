@@ -6,7 +6,7 @@ using ProjetcManager.API.Repositories.interfaces;
 
 namespace ProjetcManager.API.Controllers;
 
-[Authorize]
+//[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class ProjectController(IUnitOfWork unitOfWork) : ControllerBase

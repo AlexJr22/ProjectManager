@@ -11,11 +11,15 @@ using ProjetcManager.API.Repositories.interfaces;
 using ProjetcManager.API.Services;
 using ProjetcManager.API.Services.Interfaces;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(op =>
+{
+    op.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 
 // swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -76,7 +80,8 @@ builder.Services.AddAuthentication(op =>
 {
     op.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     op.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(op => {
+}).AddJwtBearer(op =>
+{
     op.SaveToken = true;
     op.RequireHttpsMetadata = false;
     op.TokenValidationParameters = new TokenValidationParameters()

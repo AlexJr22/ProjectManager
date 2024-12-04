@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProjetcManager.API.DTOs;
@@ -13,8 +12,10 @@ namespace ProjetcManager.API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class AuthController(
-    ITokenService tokenService, UserManager<UserModel> userManager,
-    RoleManager<IdentityRole> roleManager, IConfiguration configuration,
+    ITokenService tokenService, 
+    UserManager<UserModel> userManager,
+    RoleManager<IdentityRole> roleManager, 
+    IConfiguration configuration,
     ILogger<AuthController> logger) : ControllerBase
 {
     private readonly ITokenService tokenService = tokenService;
@@ -35,10 +36,10 @@ public class AuthController(
 
             var authClaims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.UserName!),
-                new Claim(ClaimTypes.Email, user.Email!),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("id", user.UserName!)
+                new(ClaimTypes.Name, user.UserName!),
+                new(ClaimTypes.Email, user.Email!),
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new("id", user.UserName!)
             };
 
             foreach (var userRole in userRoles)
