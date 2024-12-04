@@ -1,4 +1,6 @@
-﻿namespace ProjetcManager.API.DTOs.Task;
+﻿using ProjetcManager.API.DTOs.Project;
+
+namespace ProjetcManager.API.DTOs.Task;
 
 public class TaskWithProjectDTO
 {
