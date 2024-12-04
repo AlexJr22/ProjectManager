@@ -1,4 +1,4 @@
-﻿namespace ProjetcManager.API.DTOs.TokensDTO;
+﻿namespace ProjetcManager.API.DTOs.Tokens;
 
 public record class ResponceDTO
 {

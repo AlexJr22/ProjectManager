@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ProjetcManager.API.DTOs.TokensDTO;
+namespace ProjetcManager.API.DTOs.Tokens;
 
 public record class LoginModelDTO
 {
