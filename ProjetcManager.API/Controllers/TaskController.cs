@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjetcManager.API.DTOs.Mapping;
-using ProjetcManager.API.DTOs.TaskDTO;
+using ProjetcManager.API.DTOs.Task;
 using ProjetcManager.API.Models;
 using ProjetcManager.API.Repositories.interfaces;
 
