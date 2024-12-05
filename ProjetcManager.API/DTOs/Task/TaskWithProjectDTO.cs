@@ -2,7 +2,7 @@
 
 namespace ProjetcManager.API.DTOs.Task;
 
-public class TaskWithProjectDTO
+public record class TaskWithProjectDTO
 {
     public int Id { get; set; }
     public string? TaskName { get; set; }
