@@ -1,5 +1,6 @@
 ﻿using ProjetcManager.API.DTOs.Project;
 using ProjetcManager.API.Models;
+using System.Linq;
 
 namespace ProjetcManager.API.DTOs.Mapping;
 
@@ -45,6 +46,18 @@ public static class ProjectMapping
         {
             ProjectName = project.ProjectName,
             Id = project.Id
+        });
+    }
+
+    public static IEnumerable<ToListProjectWithTasksDTO> ToListProjectWithTasksDTO(this IEnumerable<ProjectModel> projectModels)
+    {
+        ArgumentNullException.ThrowIfNull(projectModels);
+
+        return projectModels.Select(project => new ToListProjectWithTasksDTO()
+        {
+            ProjectName = project.ProjectName,
+            Id = project.Id,
+            Tasks = project.Tasks!.ToListTaskDTO()
         });
     }
 

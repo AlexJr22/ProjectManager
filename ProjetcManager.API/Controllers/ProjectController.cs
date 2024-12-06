@@ -24,6 +24,14 @@ public class ProjectController(IUnitOfWork unitOfWork) : ControllerBase
         return BadRequest("Error to process the request!");
     }
 
+    [HttpGet("GetAllProjectsWithTasks")]
+    public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetAllProjectsWithTasks()
+    {
+        var projects = await _unitOfWork.ProjectRepository.GetAllProjectsWithTasks();
+
+        return Ok(projects.ToListProjectWithTasksDTO());
+    }
+
     [HttpGet("GetByID")]
     public async Task<ActionResult<ProjectDTO>> GetProjectById(int id)
     {
