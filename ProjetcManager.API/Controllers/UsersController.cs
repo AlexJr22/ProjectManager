@@ -54,10 +54,10 @@ public class UsersController(UserManager<UserModel> userManager, IUnitOfWork uni
     public async Task<ActionResult<UserWithProjectDTO>> AddUserToProject(string userGuid, int projectId)
     {
         var user = await _userManager.Users.Include(user => user.Projects).FirstOrDefaultAsync();
-        if (user is not null)
-        {
-            var project = await _unitOfWork.ProjectRepository.GetAsync(p => p.Id == projectId);
+        var project = await _unitOfWork.ProjectRepository.GetAsync(p => p.Id == projectId);
 
+        if (user is not null && project is not null)
+        {
             user.Projects!.Add(project!);
             var result = await _userManager.UpdateAsync(user);
 
