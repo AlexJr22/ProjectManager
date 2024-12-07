@@ -28,8 +28,7 @@ public class UsersController(UserManager<UserModel> userManager, IUnitOfWork uni
     {
         var user = await _userManager.Users.Include(u => u.Projects).FirstOrDefaultAsync();
 
-        if (user is not null)
-            return Ok(user.ToUserWithProjectDTO());
+        if (user is not null) return Ok(user.ToUserWithProjectDTO());
 
         return NotFound("User Not Found!");
     }
@@ -42,10 +41,7 @@ public class UsersController(UserManager<UserModel> userManager, IUnitOfWork uni
                                     .Include(users => users.Projects)
                                     .FirstOrDefaultAsync();
 
-        if (user is not null)
-        {
-            return Ok(user.ToUserWithProjectDTO());
-        }
+        if (user is not null) return Ok(user.ToUserWithProjectDTO());
 
         return NotFound("User Not Found!");
     }
@@ -61,10 +57,25 @@ public class UsersController(UserManager<UserModel> userManager, IUnitOfWork uni
             user.Projects!.Add(project!);
             var result = await _userManager.UpdateAsync(user);
 
-            if (result.Succeeded)
-                return Ok(user.ToUserWithProjectDTO());
+            if (result.Succeeded) return Ok(user.ToUserWithProjectDTO());
         }
 
         return BadRequest("Could't add user to project!");
+    }
+    [HttpPut("RemoveUserFFromProject")]
+    public async Task<ActionResult<UserWithProjectDTO>> RemoveUserFromProject(string userGuid, int projectId)
+    {
+        var user = await _userManager.Users.Include(user => user.Projects).FirstOrDefaultAsync();
+        var project = await _unitOfWork.ProjectRepository.GetAsync(p => p.Id == projectId);
+
+        if (user is not null && project is not null)
+        {
+            user.Projects!.Remove(project);
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded) return Ok(user.ToUserWithProjectDTO());
+        }
+
+        return BadRequest("Error to update user");
     }
 }
