@@ -49,11 +49,11 @@ public static class ProjectMapping
         });
     }
 
-    public static IEnumerable<ToListProjectWithTasksDTO> ToListProjectWithTasksDTO(this IEnumerable<ProjectModel> projectModels)
+    public static IEnumerable<ProjectWithTasksDTO> ToListProjectWithTasksDTO(this IEnumerable<ProjectModel> projectModels)
     {
         ArgumentNullException.ThrowIfNull(projectModels);
 
-        return projectModels.Select(project => new ToListProjectWithTasksDTO()
+        return projectModels.Select(project => new ProjectWithTasksDTO()
         {
             ProjectName = project.ProjectName,
             Id = project.Id,
