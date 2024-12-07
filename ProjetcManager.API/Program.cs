@@ -59,10 +59,7 @@ builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
-// authentication services
-//builder.Services.AddAuthentication("Bearer").AddJwtBearer();
-
-// Configuring DbContext
+// Configuring Identity and Ef Core
 builder.Services
     .AddIdentity<UserModel, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
@@ -76,6 +73,7 @@ builder.Services.AddDbContext<AppDbContext>(op => op.UseSqlite(StringConnection)
 var Key = builder.Configuration["JWT:Key"]
     ?? throw new ArgumentException("Invalid Secret Key!");
 
+// authentication services
 builder.Services.AddAuthentication(op =>
 {
     op.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

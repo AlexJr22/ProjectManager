@@ -157,7 +157,7 @@ namespace ProjetcManager.API.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("ProjectModelUserModel");
+                    b.ToTable("ProjectModelUserModel", (string)null);
                 });
 
             modelBuilder.Entity("ProjetcManager.API.Models.ProjectModel", b =>
@@ -171,7 +171,7 @@ namespace ProjetcManager.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Projects", (string)null);
                 });
 
             modelBuilder.Entity("ProjetcManager.API.Models.TaskModel", b =>
@@ -196,7 +196,7 @@ namespace ProjetcManager.API.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("TaskSTable");
+                    b.ToTable("TaskSTable", (string)null);
                 });
 
             modelBuilder.Entity("ProjetcManager.API.Models.UserModel", b =>

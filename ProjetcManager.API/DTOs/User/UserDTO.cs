@@ -1,8 +1,7 @@
-﻿namespace ProjetcManager.API.DTOs.User
+﻿namespace ProjetcManager.API.DTOs.User;
+
+public record class UserDTO
 {
-    public record class UserDTO
-    {
-        public string? UserName { get; set; }
-        public string? UserId { get; set; }
-    }
+    public string? UserName { get; set; }
+    public string? UserId { get; set; }
 }
