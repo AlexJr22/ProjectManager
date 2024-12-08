@@ -6,4 +6,5 @@ namespace ProjetcManager.API.Repositories.interfaces;
 public interface IProjectRepository : IRepository<ProjectModel>
 {
     Task<IEnumerable<ProjectModel>> GetAllProjectsWithTasks();
+    Task<ProjectModel> GetProjectWithUsers(int id);
 }

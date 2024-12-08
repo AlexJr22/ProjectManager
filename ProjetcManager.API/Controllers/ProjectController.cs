@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProjetcManager.API.DTOs.Mapping;
 using ProjetcManager.API.DTOs.Project;
+using ProjetcManager.API.Models;
 using ProjetcManager.API.Repositories.interfaces;
 
 namespace ProjetcManager.API.Controllers;
@@ -9,9 +11,10 @@ namespace ProjetcManager.API.Controllers;
 //[Authorize]
 [Route("api/[controller]")]
 [ApiController]
-public class ProjectController(IUnitOfWork unitOfWork) : ControllerBase
+public class ProjectController(IUnitOfWork unitOfWork, UserManager<UserModel> userManager) : ControllerBase
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
+    private readonly UserManager<UserModel> _userManager = userManager;
 
     [HttpGet("GetAllProjects")]
     public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetAllProjects()
@@ -42,6 +45,19 @@ public class ProjectController(IUnitOfWork unitOfWork) : ControllerBase
             return Ok(project.ToProjectDTO());
 
         return BadRequest();
+    }
+
+    [HttpGet("GetProjectWithUsers")]
+    public async Task<ActionResult<ProjectWithUsersDTO>> GetProjectWithUsers(int projectId)
+    {
+        var project = await _unitOfWork.ProjectRepository.GetProjectWithUsers(projectId);
+
+        if (project is not null)
+        {
+            return Ok(project.ToProjecWithUsertDTO());
+        }
+
+        return BadRequest("Project not found!");
     }
 
     [HttpPost("Create")]

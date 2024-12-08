@@ -13,8 +13,19 @@ public class ProjectRepository(AppDbContext context)
     public async Task<IEnumerable<ProjectModel>> GetAllProjectsWithTasks()
     {
         var projects = await _context.Set<ProjectModel>()
-            .Include(p => p.Tasks).AsNoTracking().ToListAsync();
+                                     .Include(p => p.Tasks)
+                                     .AsNoTracking()
+                                     .ToListAsync();
 
         return projects;
+    }
+
+    public async Task<ProjectModel> GetProjectWithUsers(int id)
+    {
+        var project = await _context.Set<ProjectModel>()
+                                    .Include(p => p.Users)
+                                    .FirstOrDefaultAsync(p => p.Id == id);
+
+        return project ?? new ProjectModel();
     }
 }

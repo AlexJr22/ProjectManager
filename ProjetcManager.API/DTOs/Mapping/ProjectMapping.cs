@@ -1,4 +1,5 @@
 ﻿using ProjetcManager.API.DTOs.Project;
+using ProjetcManager.API.DTOs.User;
 using ProjetcManager.API.Models;
 using System.Linq;
 
@@ -70,5 +71,17 @@ public static class ProjectMapping
             ProjectName = project.ProjectName,
             Id = project.Id
         });
+    }
+
+    public static ProjectWithUsersDTO ToProjecWithUsertDTO(this ProjectModel projectModel)
+    {
+        ArgumentNullException.ThrowIfNull(projectModel);
+
+        return new ProjectWithUsersDTO()
+        {
+            ProjectName = projectModel.ProjectName,
+            Id = projectModel.Id,
+            Users = projectModel.Users!.ToListUserDTO()
+        };
     }
 }
