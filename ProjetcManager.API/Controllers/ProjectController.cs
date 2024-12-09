@@ -83,6 +83,7 @@ public class ProjectController(IUnitOfWork unitOfWork) : ControllerBase
 
             return Ok(project.ToProjectDTO());
         }
-        return NotFound();
+
+        return NotFound($"Couldn't find project with id={id}");
     }
 }
