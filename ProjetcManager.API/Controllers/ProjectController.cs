@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProjetcManager.API.DTOs.Mapping;
 using ProjetcManager.API.DTOs.Project;
-using ProjetcManager.API.Models;
 using ProjetcManager.API.Repositories.interfaces;
 
 namespace ProjetcManager.API.Controllers;
@@ -11,10 +8,9 @@ namespace ProjetcManager.API.Controllers;
 //[Authorize]
 [Route("api/[controller]")]
 [ApiController]
-public class ProjectController(IUnitOfWork unitOfWork, UserManager<UserModel> userManager) : ControllerBase
+public class ProjectController(IUnitOfWork unitOfWork) : ControllerBase
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
-    private readonly UserManager<UserModel> _userManager = userManager;
 
     [HttpGet("GetAllProjects")]
     public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetAllProjects()
@@ -53,9 +49,7 @@ public class ProjectController(IUnitOfWork unitOfWork, UserManager<UserModel> us
         var project = await _unitOfWork.ProjectRepository.GetProjectWithUsers(projectId);
 
         if (project is not null)
-        {
             return Ok(project.ToProjecWithUsertDTO());
-        }
 
         return BadRequest("Project not found!");
     }
@@ -75,17 +69,20 @@ public class ProjectController(IUnitOfWork unitOfWork, UserManager<UserModel> us
     }
 
     [HttpPut("UpdateProject/Id/{id:int}")]
-    public async Task<ActionResult<ProjectDTO>> UpdatingProject(int id, ProjectDTO projectDTO)
+    public async Task<ActionResult<UpdateProjectDTO>> UpdatingProject(int id, UpdateProjectDTO projectDTO)
     {
         var project = await _unitOfWork.ProjectRepository
             .GetAsync(project => project.Id == id);
 
-        if (project is null)
-            return NotFound();
+        if (project is not null)
+        {
+            project.ProjectName = projectDTO.ProjectName;
 
-        _unitOfWork.ProjectRepository.Update(project);
-        await _unitOfWork.CommitAsync();
+            _unitOfWork.ProjectRepository.Update(project);
+            await _unitOfWork.CommitAsync();
 
-        return Ok(project.ToProjectDTO());
+            return Ok(project.ToProjectDTO());
+        }
+        return NotFound();
     }
 }
