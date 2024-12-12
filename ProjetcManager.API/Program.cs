@@ -16,10 +16,8 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers().AddJsonOptions(op =>
-{
-    op.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-});
+builder.Services.AddControllers()
+    .AddJsonOptions(op => op.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 // swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -94,6 +92,9 @@ builder.Services.AddAuthentication(op =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes((Key)))
     };
 });
+
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("AdminRequired", policy => policy.RequireRole("Admin"));
 
 var app = builder.Build();
 
