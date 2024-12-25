@@ -4,11 +4,11 @@ namespace ProjectManager.Domain.Interfaces;
 
 public interface IProjectRepository
 {
-    Task<IEnumerable<ProjectModel>>? GetAllProjects();
-    Task<IEnumerable<ProjectModel>>? GetProjectsWithTasks();
-    Task<ProjectModel>? GetProjectWithUsers();
-    Task<ProjectModel>? GetProjectById();
-    Task<ProjectModel>? CreateProject(ProjectModel project);
-    Task<ProjectModel>? UpdateProject(int id, ProjectModel project);
-    Task<ProjectModel>? DeleteProject(int id);
+    Task<IEnumerable<ProjectModel>>? GetAllProjectsAsync();
+    Task<IEnumerable<ProjectModel>>? GetProjectsWithTasksAsync();
+    Task<ProjectModel>? GetProjectWithUsersAsync();
+    Task<ProjectModel>? GetProjectByIdAsync();
+    Task<ProjectModel>? CreateProjectAsync(ProjectModel project);
+    Task<ProjectModel>? UpdateProjectAsync(int id, ProjectModel project);
+    Task<ProjectModel>? DeleteProjectAsync(int id);
 }

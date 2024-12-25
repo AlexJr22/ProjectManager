@@ -4,10 +4,10 @@ namespace ProjectManager.Domain.Interfaces;
 
 public interface ITaskRepository
 {
-    Task<IEnumerable<TaskModel>>? GetAllTask();
-    Task<IEnumerable<TaskModel>>? GetTaskWithUsers();
-    Task<TaskModel>? GetTaskById();
-    Task<TaskModel>? CreateTask(TaskModel task);
-    Task<TaskModel>? UpdateTask(int id, TaskModel task);
-    Task<TaskModel>? DeleteTask(int id);
+    Task<IEnumerable<TaskModel>>? GetAllTaskAsync();
+    Task<IEnumerable<TaskModel>>? GetTaskWithUsersAsync();
+    Task<TaskModel>? GetTaskByIdAsync();
+    Task<TaskModel>? CreateTaskAsync(TaskModel task);
+    Task<TaskModel>? UpdateTaskAsync(int id, TaskModel task);
+    Task<TaskModel>? DeleteTaskAsync(int id);
 }
