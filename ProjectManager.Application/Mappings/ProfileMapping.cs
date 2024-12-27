@@ -9,7 +9,11 @@ public class ProfileMapping : Profile
 {
     public ProfileMapping()
     {
+        // project mapping
         CreateMap<ProjectDTO, ProjectModel>().ReverseMap();
+        CreateMap<CreatingProjectDTO, ProjectModel>().ReverseMap();
+        
+        // task mapping
         CreateMap<TaskDTO, ProjectModel>().ReverseMap();
     }
 }
