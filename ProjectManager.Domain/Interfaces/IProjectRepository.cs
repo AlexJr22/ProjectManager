@@ -1,14 +1,13 @@
 ﻿using ProjectManager.Domain.Entities;
+using System.Linq.Expressions;
 
 namespace ProjectManager.Domain.Interfaces;
 
 public interface IProjectRepository
 {
-    Task<IEnumerable<ProjectModel>>? GetAllProjectsAsync();
-    Task<IEnumerable<ProjectModel>>? GetProjectsWithTasksAsync();
-    Task<ProjectModel>? GetProjectWithUsersAsync();
-    Task<ProjectModel>? GetProjectByIdAsync();
-    Task<ProjectModel>? CreateProjectAsync(ProjectModel project);
-    Task<ProjectModel>? UpdateProjectAsync(int id, ProjectModel project);
-    Task<ProjectModel>? DeleteProjectAsync(int id);
+    Task<ProjectModel> GetAsync(Expression<Func<ProjectModel, bool>> expression);
+    Task<IEnumerable<ProjectModel>> GetAllAsync();
+    Task<ProjectModel> CreateAsync(ProjectModel entity);
+    Task<ProjectModel> UpdateAsync(ProjectModel entity);
+    Task<ProjectModel> DeteleAsync(ProjectModel entity);
 }
