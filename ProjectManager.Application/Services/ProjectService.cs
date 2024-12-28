@@ -26,7 +26,7 @@ public class ProjectService(
     {
         var projects = await _projectRepository.GetAllAsync();
 
-        return mapper.Map<IEnumerable<ProjectDTO>>(projects); ;
+        return mapper.Map<IEnumerable<ProjectDTO>>(projects);
     }
 
     public async Task<ProjectDTO> CreateAsync(CreatingProjectDTO projectDTO)
