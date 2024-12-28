@@ -18,46 +18,35 @@ public class ProjectService(
     public async Task<ProjectDTO> GetAsync(Expression<Func<ProjectModel, bool>> expression)
     {
         var project = await _projectRepository.GetAsync(expression);
-        var projectDTO = mapper.Map<ProjectDTO>(project);
 
-        return projectDTO;
+        return mapper.Map<ProjectDTO>(project);
     }
 
     public async Task<IEnumerable<ProjectDTO>> GetAllAsync()
     {
         var projects = await _projectRepository.GetAllAsync();
-        var projectDTOs = mapper.Map<IEnumerable<ProjectDTO>>(projects);
 
-        return projectDTOs;
+        return mapper.Map<IEnumerable<ProjectDTO>>(projects); ;
     }
 
     public async Task<ProjectDTO> CreateAsync(CreatingProjectDTO projectDTO)
     {
-        var entity = mapper.Map<ProjectModel>(projectDTO);
-        var newProject = await _projectRepository.CreateAsync(entity);
+        var newProject = await _projectRepository.CreateAsync(mapper.Map<ProjectModel>(projectDTO));
 
-        var newProjectDto = mapper.Map<ProjectDTO>(newProject);
-
-        return newProjectDto;
+        return mapper.Map<ProjectDTO>(newProject);
     }
 
     public async Task<ProjectDTO> UpdateAsync(ProjectDTO projectDTO)
     {
-        var entity = mapper.Map<ProjectModel>(projectDTO);
-        var updatedProject = await _projectRepository.UpdateAsync(entity);
+        var updatedProject = await _projectRepository.UpdateAsync(mapper.Map<ProjectModel>(projectDTO));
 
-        var newProjectDto = mapper.Map<ProjectDTO>(updatedProject);
-
-        return newProjectDto;
+        return mapper.Map<ProjectDTO>(updatedProject);
     }
 
     public async Task<ProjectDTO> DeleteAsync(ProjectDTO project)
     {
-        var projectModel = mapper.Map<ProjectModel>(project);
-        var projectDeleted = await _projectRepository.DeteleAsync(projectModel);
+        var projectDeleted = await _projectRepository.DeteleAsync(mapper.Map<ProjectModel>(project));
 
-        var projectDto = mapper.Map<ProjectDTO>(projectDeleted);
-
-        return projectDto;
+        return mapper.Map<ProjectDTO>(projectDeleted); ;
     }
 }
