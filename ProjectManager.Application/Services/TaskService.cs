@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
+using System.Linq.Expressions;
 using ProjectManager.Application.DTOs.Task;
 using ProjectManager.Application.Interfaces;
 using ProjectManager.Domain.Entities;
 using ProjectManager.Domain.Interfaces;
-using System.Linq.Expressions;
 
 namespace ProjectManager.Application.Services;
 
-public class TaskService(ITaskRepository taskRepository, Mapper mapper) : ITaskService
+public class TaskService(
+    ITaskRepository taskRepository, 
+    Mapper mapper
+) : ITaskService
 {
     private readonly Mapper _mapper = mapper;
     private readonly ITaskRepository _taskRepository = taskRepository;
