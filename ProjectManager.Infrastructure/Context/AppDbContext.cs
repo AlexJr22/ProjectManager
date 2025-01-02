@@ -3,8 +3,15 @@ using ProjectManager.Domain.Entities;
 
 namespace ProjectManager.Infrastructure.Context;
 
-internal class AppDbContext(DbContextOptions options) : DbContext(options)
+public class AppDbContext(DbContextOptions options) : DbContext(options)
 {
     DbSet<ProjectModel>? Projects { get; set; }
     DbSet<TaskModel>? Tasks { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+    }
 }
