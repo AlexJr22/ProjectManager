@@ -484,4 +484,5 @@ $RECYCLE.BIN/
 *.swp
 
 # SQLite
-/ProjetcManager.API/SQliteDB*
+/ProjectManager.Infrastructure/Migrations/
+

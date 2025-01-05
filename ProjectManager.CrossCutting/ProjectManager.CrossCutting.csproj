@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\ProjectManager.Domain\ProjectManager.Domain.csproj" />
-    <ProjectReference Include="..\ProjectManager.Application\ProjectManager.Application.csproj" />
-    <ProjectReference Include="..\ProjectManager.Infrastructure\ProjectManager.Infrastructure.csproj" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Ioc\" />
+    <ProjectReference Include="..\ProjectManager.Domain\ProjectManager.Domain.csproj" />
+    <ProjectReference Include="..\ProjectManager.Application\ProjectManager.Application.csproj" />
+    <ProjectReference Include="..\ProjectManager.Infrastructure\ProjectManager.Infrastructure.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
