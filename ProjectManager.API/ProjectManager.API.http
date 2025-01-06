@@ -1,0 +1,5 @@
+﻿@ProjectManager.API_HostAddress = https://localhost:7079
+
+GET {{ProjectManager.API_HostAddress}}/api/project
+
+###

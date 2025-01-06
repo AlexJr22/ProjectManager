@@ -8,8 +8,8 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) { }
 
-    DbSet<TaskModel> Tasks { get; set; }
-    DbSet<ProjectModel> Projects { get; set; }
+    public DbSet<TaskModel> Tasks { get; set; }
+    public DbSet<ProjectModel> Projects { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

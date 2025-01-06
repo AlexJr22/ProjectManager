@@ -486,3 +486,4 @@ $RECYCLE.BIN/
 # SQLite
 /ProjectManager.Infrastructure/Migrations/
 
+/ProjectManager.Infrastructure/MyDB.db

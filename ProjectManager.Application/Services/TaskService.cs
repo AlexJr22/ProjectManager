@@ -9,10 +9,10 @@ namespace ProjectManager.Application.Services;
 
 public class TaskService(
     ITaskRepository taskRepository, 
-    Mapper mapper
+    IMapper mapper
 ) : ITaskService
 {
-    private readonly Mapper _mapper = mapper;
+    private readonly IMapper _mapper = mapper;
     private readonly ITaskRepository _taskRepository = taskRepository;
 
     public async Task<IEnumerable<TaskDTO>> GetAllTasks()

@@ -9,11 +9,11 @@ namespace ProjectManager.Application.Services;
 
 public class ProjectService(
     IProjectRepository projectRepository,
-    Mapper mapper
+    IMapper mapper
 ) : IProjectService
 {
     private readonly IProjectRepository _projectRepository = projectRepository;
-    private readonly Mapper mapper = mapper;
+    private readonly IMapper mapper = mapper;
 
     public async Task<ProjectDTO> GetAsync(Expression<Func<ProjectModel, bool>> expression)
     {
