@@ -9,6 +9,6 @@ public interface IProjectService
     Task<IEnumerable<ProjectDTO>> GetAllAsync();
     Task<ProjectDTO> GetAsync(Expression<Func<ProjectModel, bool>> expression);
     Task<ProjectDTO> CreateAsync(CreatingProjectDTO entity);
-    Task<ProjectDTO> UpdateAsync(ProjectDTO entity);
-    Task<ProjectDTO> DeleteAsync(ProjectDTO entity);
+    ProjectDTO Update(ProjectDTO entity);
+    ProjectDTO Delete(ProjectDTO entity);
 }

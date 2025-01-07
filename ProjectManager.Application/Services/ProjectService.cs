@@ -1,16 +1,13 @@
 ﻿using System.Linq.Expressions;
+using AutoMapper;
 using ProjectManager.Application.DTOs.Project;
 using ProjectManager.Application.Interfaces;
 using ProjectManager.Domain.Entities;
 using ProjectManager.Domain.Interfaces;
-using AutoMapper;
 
 namespace ProjectManager.Application.Services;
 
-public class ProjectService(
-    IProjectRepository projectRepository,
-    IMapper mapper
-) : IProjectService
+public class ProjectService(IProjectRepository projectRepository, IMapper mapper) : IProjectService
 {
     private readonly IProjectRepository _projectRepository = projectRepository;
     private readonly IMapper mapper = mapper;
@@ -36,17 +33,17 @@ public class ProjectService(
         return mapper.Map<ProjectDTO>(newProject);
     }
 
-    public async Task<ProjectDTO> UpdateAsync(ProjectDTO projectDTO)
+    public ProjectDTO Update(ProjectDTO projectDTO)
     {
-        var updatedProject = await _projectRepository.UpdateAsync(mapper.Map<ProjectModel>(projectDTO));
+        var updatedProject = _projectRepository.Update(mapper.Map<ProjectModel>(projectDTO));
 
         return mapper.Map<ProjectDTO>(updatedProject);
     }
 
-    public async Task<ProjectDTO> DeleteAsync(ProjectDTO project)
+    public ProjectDTO Delete(ProjectDTO project)
     {
-        var projectDeleted = await _projectRepository.DeteleAsync(mapper.Map<ProjectModel>(project));
+        var projectDeleted = _projectRepository.Detele(mapper.Map<ProjectModel>(project));
 
-        return mapper.Map<ProjectDTO>(projectDeleted); ;
+        return mapper.Map<ProjectDTO>(projectDeleted);
     }
 }

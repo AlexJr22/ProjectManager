@@ -17,23 +17,29 @@ public class ProjectRepository(AppDbContext DbContext) : IProjectRepository
         return projects;
     }
 
-    public async Task<ProjectModel> CreateAsync(ProjectModel entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ProjectModel> DeteleAsync(ProjectModel entity)
-    {
-        throw new NotImplementedException();
-    }
-
     public Task<ProjectModel> GetAsync(Expression<Func<ProjectModel, bool>> expression)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ProjectModel> UpdateAsync(ProjectModel entity)
+    public async Task<ProjectModel> CreateAsync(ProjectModel entity)
     {
-        throw new NotImplementedException();
+        await context.Projects.AddRangeAsync(entity);
+
+        return entity;
+    }
+
+    public ProjectModel Update(ProjectModel entity)
+    {
+        context.Entry(entity).State = EntityState.Modified;
+
+        return entity;
+    }
+
+    public ProjectModel Detele(ProjectModel entity)
+    {
+        context.Projects.Remove(entity);
+
+        return entity;
     }
 }
