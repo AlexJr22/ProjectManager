@@ -17,9 +17,11 @@ public class ProjectRepository(AppDbContext DbContext) : IProjectRepository
         return projects;
     }
 
-    public Task<ProjectModel> GetAsync(Expression<Func<ProjectModel, bool>> expression)
+    public async Task<ProjectModel>? GetAsync(Expression<Func<ProjectModel, bool>> expression)
     {
-        throw new NotImplementedException();
+        var project = await context.Projects.FirstOrDefaultAsync(expression);
+
+        return project!;
     }
 
     public async Task<ProjectModel> CreateAsync(ProjectModel entity)
