@@ -3,7 +3,6 @@ using AutoMapper;
 using ProjectManager.Application.DTOs.Project;
 using ProjectManager.Application.Interfaces;
 using ProjectManager.Domain.Entities;
-using ProjectManager.Domain.Interfaces;
 
 namespace ProjectManager.Application.Services;
 
@@ -28,21 +27,27 @@ public class ProjectService(IUnitOfWork unitOfWord, IMapper mapper) : IProjectSe
 
     public async Task<ProjectDTO> CreateAsync(CreatingProjectDTO projectDTO)
     {
-        var newProject = await unitOfWork.ProjectRepository.CreateAsync(mapper.Map<ProjectModel>(projectDTO));
+        var newProject = await unitOfWork
+            .ProjectRepository
+            .CreateAsync(mapper.Map<ProjectModel>(projectDTO));
 
         return mapper.Map<ProjectDTO>(newProject);
     }
 
     public ProjectDTO Update(ProjectDTO projectDTO)
     {
-        var updatedProject = unitOfWork.ProjectRepository.Update(mapper.Map<ProjectModel>(projectDTO));
+        var updatedProject = unitOfWork
+            .ProjectRepository
+            .Update(mapper.Map<ProjectModel>(projectDTO));
 
         return mapper.Map<ProjectDTO>(updatedProject);
     }
 
     public ProjectDTO Delete(ProjectDTO project)
     {
-        var projectDeleted = unitOfWork.ProjectRepository.Detele(mapper.Map<ProjectModel>(project));
+        var projectDeleted = unitOfWork
+            .ProjectRepository
+            .Detele(mapper.Map<ProjectModel>(project));
 
         return mapper.Map<ProjectDTO>(projectDeleted);
     }
