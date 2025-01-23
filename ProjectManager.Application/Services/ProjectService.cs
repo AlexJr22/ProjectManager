@@ -31,23 +31,29 @@ public class ProjectService(IUnitOfWork unitOfWord, IMapper mapper) : IProjectSe
             .ProjectRepository
             .CreateAsync(mapper.Map<ProjectModel>(projectDTO));
 
+        await unitOfWork.CommitAsync();
+
         return mapper.Map<ProjectDTO>(newProject);
     }
 
-    public ProjectDTO Update(ProjectDTO projectDTO)
+    public async Task<ProjectDTO> UpdateAsync(UpdateProjectDTO projectDTO, int id)
     {
-        var updatedProject = unitOfWork
-            .ProjectRepository
-            .Update(mapper.Map<ProjectModel>(projectDTO));
+        var updatedProject = new ProjectDTO { Id = id, ProjectName = projectDTO.ProjectName };
+
+        _ = unitOfWork.ProjectRepository.Update(mapper.Map<ProjectModel>(updatedProject));
+
+        await unitOfWork.CommitAsync();
 
         return mapper.Map<ProjectDTO>(updatedProject);
     }
 
-    public ProjectDTO Delete(ProjectDTO project)
+    public async Task<ProjectDTO> Delete(int id)
     {
-        var projectDeleted = unitOfWork
-            .ProjectRepository
-            .Detele(mapper.Map<ProjectModel>(project));
+        var project = await unitOfWork.ProjectRepository.GetAsync(p => p.Id == id)!;
+
+        var projectDeleted = unitOfWork.ProjectRepository.Detele(project);
+
+        await unitOfWork.CommitAsync();
 
         return mapper.Map<ProjectDTO>(projectDeleted);
     }

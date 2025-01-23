@@ -12,6 +12,8 @@ public class ProfileMapping : Profile
         // project mapping
         CreateMap<ProjectDTO, ProjectModel>().ReverseMap();
         CreateMap<CreatingProjectDTO, ProjectModel>().ReverseMap();
+        CreateMap<UpdateProjectDTO, ProjectModel>().ReverseMap();
+
         
         // task mapping
         CreateMap<TaskDTO, ProjectModel>().ReverseMap();
