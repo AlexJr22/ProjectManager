@@ -9,6 +9,6 @@ public interface ITaskService
     Task<IEnumerable<TaskDTO>> GetAllTasks();
     Task<TaskDTO> GetAsync(Expression<Func<TaskModel, bool>> expression);
     Task<TaskDTO> CreateTask(CreatingTaskDTO entity);
-    Task<TaskDTO> UpdateTask(UpdateTaskDTO entity);
-    Task<TaskDTO> DeleteTask(TaskDTO entity);
+    Task<TaskDTO> UpdateTask(UpdateTaskDTO entity, int id);
+    Task<TaskDTO> DeleteTask(int id);
 }

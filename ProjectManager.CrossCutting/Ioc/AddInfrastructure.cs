@@ -22,7 +22,9 @@ public static class AddInfrastructure
 
         services.AddScoped<IProjectService, ProjectService>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
-        //services.AddScoped<ITaskService, TaskService>();
+        services.AddScoped<ITaskService, TaskService>();
+        services.AddScoped<ITaskRepository, TaskRepository>();
+
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         return services;

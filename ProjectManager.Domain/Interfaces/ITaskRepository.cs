@@ -8,6 +8,6 @@ public interface ITaskRepository
     Task<TaskModel> GetAsync(Expression<Func<TaskModel, bool>> expression);
     Task<IEnumerable<TaskModel>> GetAllAsync();
     Task<TaskModel> CreateAsync(TaskModel entity);
-    Task<TaskModel> UpdateAsync(TaskModel entity);
-    Task<TaskModel> DeleteAsync(TaskModel entity);
+    TaskModel Update(TaskModel entity);
+    TaskModel Delete(TaskModel entity);
 }

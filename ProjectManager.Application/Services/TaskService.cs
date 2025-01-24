@@ -1,54 +1,58 @@
-﻿using AutoMapper;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using AutoMapper;
 using ProjectManager.Application.DTOs.Task;
 using ProjectManager.Application.Interfaces;
 using ProjectManager.Domain.Entities;
-using ProjectManager.Domain.Interfaces;
 
 namespace ProjectManager.Application.Services;
 
-public class TaskService(
-    ITaskRepository taskRepository, 
-    IMapper mapper
-) : ITaskService
+public class TaskService(IUnitOfWork iunitOfWork, IMapper mapper) : ITaskService
 {
     private readonly IMapper _mapper = mapper;
-    private readonly ITaskRepository _taskRepository = taskRepository;
+    private readonly IUnitOfWork unitOfWork = iunitOfWork;
 
     public async Task<IEnumerable<TaskDTO>> GetAllTasks()
     {
-        var tasks = await _taskRepository.GetAllAsync();
+        var tasks = await unitOfWork.TaskRepository.GetAllAsync();
 
         return _mapper.Map<IEnumerable<TaskDTO>>(tasks);
     }
 
     public async Task<TaskDTO> GetAsync(Expression<Func<TaskModel, bool>> expression)
     {
-        var task = await _taskRepository.GetAsync(expression);
+        var task = await unitOfWork.TaskRepository.GetAsync(expression);
 
         return _mapper.Map<TaskDTO>(task);
     }
 
     public async Task<TaskDTO> CreateTask(CreatingTaskDTO entity)
     {
-        var newTask = await _taskRepository
-            .CreateAsync(_mapper.Map<TaskModel>(entity));
+        var newTask = await unitOfWork.TaskRepository.CreateAsync(_mapper.Map<TaskModel>(entity));
+
+        await unitOfWork.CommitAsync();
 
         return _mapper.Map<TaskDTO>(newTask);
     }
 
-    public async Task<TaskDTO> UpdateTask(UpdateTaskDTO entity)
+    public async Task<TaskDTO> UpdateTask(UpdateTaskDTO entity, int id)
     {
-        var updatedTask = await _taskRepository
-            .UpdateAsync(_mapper.Map<TaskModel>(entity));
+        var task = _mapper.Map<TaskDTO>(entity);
+        task.Id = id;
+
+        var updatedTask = unitOfWork.TaskRepository.Update(_mapper.Map<TaskModel>(task));
+
+        await unitOfWork.CommitAsync();
 
         return _mapper.Map<TaskDTO>(updatedTask);
     }
 
-    public async Task<TaskDTO> DeleteTask(TaskDTO entity)
+    public async Task<TaskDTO> DeleteTask(int id)
     {
-        var deletedTask = await _taskRepository
-            .DeleteAsync(_mapper.Map<TaskModel>(entity));
+        var entity = await unitOfWork.TaskRepository.GetAsync(t =>  t.Id == id);
+
+        var deletedTask = unitOfWork.TaskRepository.Delete(entity);
+
+        await unitOfWork.CommitAsync();
 
         return _mapper.Map<TaskDTO>(deletedTask);
     }

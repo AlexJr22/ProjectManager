@@ -6,12 +6,18 @@ namespace ProjectManager.Infrastructure.Repositories;
 
 public class UnitOfWork(AppDbContext DbContext) : IUnitOfWork
 {
-    IProjectRepository? _projectRepository;
     private readonly AppDbContext context = DbContext;
+    IProjectRepository? _projectRepository;
+    ITaskRepository? _taskRepository;
 
     public IProjectRepository ProjectRepository
     {
         get { return _projectRepository ??= new ProjectRepository(context); }
+    }
+
+    public ITaskRepository TaskRepository
+    {
+        get { return _taskRepository ??= new TaskRepository(context); }
     }
 
     public async Task CommitAsync()
