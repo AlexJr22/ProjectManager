@@ -13,6 +13,7 @@ public class ProfileMapping : Profile
         CreateMap<ProjectDTO, ProjectModel>().ReverseMap();
         CreateMap<CreatingProjectDTO, ProjectModel>().ReverseMap();
         CreateMap<UpdateProjectDTO, ProjectModel>().ReverseMap();
+        CreateMap<UpdateProjectDTO, ProjectDTO>().ReverseMap();
 
         
         // task mapping

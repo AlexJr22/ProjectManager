@@ -37,7 +37,7 @@ public class ProjectController(IProjectService projectService, IMapper mapper) :
         return mapper.Map<ProjectDTO>(project);
     }
 
-    [HttpPatch("update/{id:int}")]
+    [HttpPut("update/{id:int}")]
     public async Task<ProjectDTO> Update(UpdateProjectDTO projectDTO, int id)
     {
         var updatedProject = await projectService.UpdateAsync(projectDTO, id);
