@@ -36,8 +36,14 @@ public class TaskService(IUnitOfWork iunitOfWork, IMapper mapper) : ITaskService
 
     public async Task<TaskDTO> UpdateTask(UpdateTaskDTO entity, int id)
     {
-        var task = _mapper.Map<TaskDTO>(entity);
-        task.Id = id;
+        var task = new TaskDTO
+        {
+            Id = id,
+            ProjectId = entity.ProjectId,
+            TaskDescription = entity.TaskDescription,
+            TaskName = entity.TaskName,
+            TaskStatus = entity.TaskStatus
+        };
 
         var updatedTask = unitOfWork.TaskRepository.Update(_mapper.Map<TaskModel>(task));
 
@@ -48,7 +54,7 @@ public class TaskService(IUnitOfWork iunitOfWork, IMapper mapper) : ITaskService
 
     public async Task<TaskDTO> DeleteTask(int id)
     {
-        var entity = await unitOfWork.TaskRepository.GetAsync(t =>  t.Id == id);
+        var entity = await unitOfWork.TaskRepository.GetAsync(t => t.Id == id);
 
         var deletedTask = unitOfWork.TaskRepository.Delete(entity);
 
