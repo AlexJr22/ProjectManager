@@ -36,7 +36,7 @@ public class ProjectService(IUnitOfWork unitOfWord, IMapper mapper) : IProjectSe
         return mapper.Map<ProjectDTO>(newProject);
     }
 
-    public async Task<ProjectDTO> UpdateAsync(UpdateProjectDTO projectDTO, int id)
+    public async Task<ProjectDTO> Update(UpdateProjectDTO projectDTO, int id)
     {
         var entity = new ProjectDTO { Id = id, ProjectName = projectDTO.ProjectName };
 
