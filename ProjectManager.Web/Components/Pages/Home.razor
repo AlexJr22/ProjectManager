@@ -1,6 +1,8 @@
 ﻿@page "/"
+@inject NavigationManager navigation
 
 <PageTitle>ProjectManager</PageTitle>
 
-<h1>Home - ProjectManager</h1>
-
+@code {
+    protected override void OnInitialized() => navigation.NavigateTo("/projects", true);
+}
