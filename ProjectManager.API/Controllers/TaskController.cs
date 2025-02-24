@@ -15,9 +15,6 @@ public class TaskController(ITaskService ItaskService) : ControllerBase
     {
         var tasks = await taskService.GetAllTasks();
 
-        if (!tasks.Any())
-            return BadRequest();
-
         return Ok(tasks);
     }
 
@@ -27,7 +24,7 @@ public class TaskController(ITaskService ItaskService) : ControllerBase
         var task = await taskService.GetAsync(t => t.Id == id);
 
         if (task is null)
-            return BadRequest();
+            return NotFound();
 
         return Ok(task);
     }
@@ -61,5 +58,4 @@ public class TaskController(ITaskService ItaskService) : ControllerBase
 
         return Ok(deletedTask);
     }
-
 }
