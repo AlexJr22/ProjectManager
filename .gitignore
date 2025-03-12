@@ -483,7 +483,3 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 
-# SQLite
-/ProjectManager.Infrastructure/Migrations/
-
-/ProjectManager.Infrastructure/MyDB.db

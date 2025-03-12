@@ -12,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add Infrastructure
-string strConection = builder.Configuration.GetConnectionString("SqLite") ?? string.Empty;
+string strConection = builder.Configuration.GetConnectionString("SqlServer") ?? string.Empty;
 builder.Services.AddServices(strConection);
 
 var app = builder.Build();

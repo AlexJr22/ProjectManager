@@ -16,7 +16,7 @@ public static class AddInfrastructure
         string strConnection
     )
     {
-        services.AddDbContext<AppDbContext>(options => options.UseSqlite(strConnection));
+        services.AddDbContext<AppDbContext>(options => options.UseSqlServer(strConnection));
 
         services.AddAutoMapper(typeof(ProfileMapping).Assembly);
 

@@ -3,16 +3,21 @@
 
 <div class="container mt-3">
     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-3">
-        @for (int i = 0; i < 4; i++)
+        @for (int i = 1; i <= 7; i++)
         {
-            <TaskComponent Name=@($"test-{i}")
+            <TaskComponent Name=@($"project-{i}")
                            @key="i"
                            DateOfCreation=@DateTime.Now.ToString("yyyy/mm/dd")
-                           Status="false" />
+                           Status=@(Status(i).ToString()) />
         }
     </div>
 </div>
 
 @code {
+    private bool Status(int i)
+    {
+        if (i % 2 == 0) return true;
 
+        return false;
+    }
 }
