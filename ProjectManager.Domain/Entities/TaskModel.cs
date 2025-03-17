@@ -11,6 +11,8 @@ public sealed class TaskModel
     public int? ProjectId { get; private set; }
     public ProjectModel? Project { get; private set; }
 
+    private TaskModel() { }
+
     public TaskModel(string taskName, string? taskDescription, int? projectId, int id)
     {
         TaskName = NameValidation(taskName);

@@ -2,15 +2,18 @@
 
 public sealed class ProjectModel
 {
-    public int Id { get; set; }
+    public int Id { get; private set; }
     public string? ProjectName { get; private set; }
     public ICollection<TaskModel>? Tasks { get; private set; }
-    //public ICollection<UserModel>? Users { get; private set; }
 
-    public ProjectModel(string projectName, int id)
+    // public ICollection<UserModel>? Users { get; private set; }
+
+    private ProjectModel() { }
+
+    public ProjectModel(string projectName, IEnumerable<TaskModel>? tasks)
     {
         ProjectName = NameValidation(projectName);
-        Id = id;
+        IEnumerable<TaskModel>? Tasks = tasks;
     }
 
     public void Update(string? projectName, ICollection<TaskModel>? tasks)
