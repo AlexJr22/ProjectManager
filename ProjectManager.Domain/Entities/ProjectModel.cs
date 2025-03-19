@@ -4,6 +4,7 @@ public sealed class ProjectModel
 {
     public int Id { get; private set; }
     public string? ProjectName { get; private set; }
+    public DateTime CreateAt { get; private set; }
     public ICollection<TaskModel>? Tasks { get; private set; }
 
     // public ICollection<UserModel>? Users { get; private set; }
