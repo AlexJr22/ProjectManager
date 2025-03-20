@@ -9,18 +9,25 @@ public sealed class ProjectModel
 
     // public ICollection<UserModel>? Users { get; private set; }
 
-    private ProjectModel() { }
-
-    public ProjectModel(string projectName, IEnumerable<TaskModel>? tasks)
+    private ProjectModel()
     {
-        ProjectName = NameValidation(projectName);
-        IEnumerable<TaskModel>? Tasks = tasks;
+        CreateAt = DateTime.UtcNow;
     }
 
-    public void Update(string? projectName, ICollection<TaskModel>? tasks)
+    public ProjectModel(string projectName, ICollection<TaskModel>? tasks)
     {
-        ProjectName = projectName;
+        ProjectName = NameValidation(projectName);
+        CreateAt = DateTime.UtcNow;
         Tasks = tasks;
+    }
+
+    public void Update(string projectName, ICollection<TaskModel>? tasks)
+    {
+        if (!string.IsNullOrWhiteSpace(projectName))
+            ProjectName = NameValidation(projectName);
+
+        if (tasks != null)
+            Tasks = tasks;
     }
 
     private string NameValidation(string name)

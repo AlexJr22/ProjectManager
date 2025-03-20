@@ -9,5 +9,9 @@ public class ProjectEntityConfiguration : IEntityTypeConfiguration<ProjectModel>
     public void Configure(EntityTypeBuilder<ProjectModel> builder)
     {
         builder.HasKey(e => e.Id);
+
+        builder.Property(p => p.CreateAt)
+            .HasDefaultValueSql("GETUTCDATE")
+            .ValueGeneratedOnAdd();
     }
 }
