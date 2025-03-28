@@ -32,7 +32,7 @@ public class TaskController(ITaskService ItaskService) : ControllerBase
     [HttpPost("creatingNewTask")]
     public async Task<ActionResult<TaskDTO>> Create(CreatingTaskDTO taskDTO)
     {
-        var newTask = await taskService.CreateTask(taskDTO);
+        var newTask = await taskService.CreateAsync(taskDTO);
 
         if (newTask is null)
             return BadRequest();
@@ -43,7 +43,7 @@ public class TaskController(ITaskService ItaskService) : ControllerBase
     [HttpPatch("updatingTask/id/{id:int}")]
     public async Task<ActionResult<TaskDTO>> Update(UpdateTaskDTO task, int id)
     {
-        var taskUpdated = await taskService.UpdateTask(task, id);
+        var taskUpdated = await taskService.Update(task, id);
 
         if (taskUpdated is null)
             return BadRequest();
@@ -54,7 +54,7 @@ public class TaskController(ITaskService ItaskService) : ControllerBase
     [HttpDelete("deleting/id/{id:int}")]
     public async Task<ActionResult<TaskDTO>> Delete(int id)
     {
-        var deletedTask = await taskService.DeleteTask(id);
+        var deletedTask = await taskService.Delete(id);
 
         return Ok(deletedTask);
     }

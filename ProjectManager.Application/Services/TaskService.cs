@@ -25,7 +25,7 @@ public class TaskService(IUnitOfWork iunitOfWork, IMapper mapper) : ITaskService
         return _mapper.Map<TaskDTO>(task);
     }
 
-    public async Task<TaskDTO> CreateTask(CreatingTaskDTO entity)
+    public async Task<TaskDTO> CreateAsync(CreatingTaskDTO entity)
     {
         var newTask = await unitOfWork.TaskRepository.CreateAsync(_mapper.Map<TaskModel>(entity));
 
@@ -34,7 +34,7 @@ public class TaskService(IUnitOfWork iunitOfWork, IMapper mapper) : ITaskService
         return _mapper.Map<TaskDTO>(newTask);
     }
 
-    public async Task<TaskDTO> UpdateTask(UpdateTaskDTO entity, int id)
+    public async Task<TaskDTO> Update(UpdateTaskDTO entity, int id)
     {
         var task = new TaskDTO
         {
@@ -45,21 +45,21 @@ public class TaskService(IUnitOfWork iunitOfWork, IMapper mapper) : ITaskService
             TaskStatus = entity.TaskStatus
         };
 
-        var updatedTask = unitOfWork.TaskRepository.Update(_mapper.Map<TaskModel>(task));
+        _ = unitOfWork.TaskRepository.Update(_mapper.Map<TaskModel>(task));
 
         await unitOfWork.CommitAsync();
 
-        return _mapper.Map<TaskDTO>(updatedTask);
+        return _mapper.Map<TaskDTO>(task);
     }
 
-    public async Task<TaskDTO> DeleteTask(int id)
+    public async Task<TaskDTO> Delete(int id)
     {
         var entity = await unitOfWork.TaskRepository.GetAsync(t => t.Id == id);
 
-        var deletedTask = unitOfWork.TaskRepository.Delete(entity);
+        _ = unitOfWork.TaskRepository.Delete(entity);
 
         await unitOfWork.CommitAsync();
 
-        return _mapper.Map<TaskDTO>(deletedTask);
+        return _mapper.Map<TaskDTO>(entity);
     }
 }

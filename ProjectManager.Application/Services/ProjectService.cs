@@ -11,18 +11,18 @@ public class ProjectService(IUnitOfWork unitOfWord, IMapper mapper) : IProjectSe
     private readonly IMapper mapper = mapper;
     private readonly IUnitOfWork unitOfWork = unitOfWord;
 
-    public async Task<ProjectDTO> GetAsync(Expression<Func<ProjectModel, bool>> expression)
-    {
-        var project = await unitOfWork.ProjectRepository.GetAsync(expression)!;
-
-        return mapper.Map<ProjectDTO>(project);
-    }
-
     public async Task<IEnumerable<ProjectDTO>> GetAllAsync()
     {
         var projects = await unitOfWork.ProjectRepository.GetAllAsync();
 
         return mapper.Map<IEnumerable<ProjectDTO>>(projects);
+    }
+
+    public async Task<ProjectDTO> GetAsync(Expression<Func<ProjectModel, bool>> expression)
+    {
+        var project = await unitOfWork.ProjectRepository.GetAsync(expression)!;
+
+        return mapper.Map<ProjectDTO>(project);
     }
 
     public async Task<ProjectDTO> CreateAsync(CreatingProjectDTO projectDTO)
@@ -36,25 +36,26 @@ public class ProjectService(IUnitOfWork unitOfWord, IMapper mapper) : IProjectSe
         return mapper.Map<ProjectDTO>(newProject);
     }
 
-    public async Task<ProjectDTO> Update(UpdateProjectDTO projectDTO, int id)
+    public async Task<ProjectDTO> Update(UpdateProjectDTO entity, int id)
     {
-        var entity = new ProjectDTO { Id = id, ProjectName = projectDTO.ProjectName };
+        var projectDto = new ProjectDTO { Id = id, ProjectName = entity.ProjectName };
 
-        unitOfWork.ProjectRepository.Update(mapper.Map<ProjectModel>(entity));
+        _ = unitOfWork.ProjectRepository.Update(mapper.Map<ProjectModel>(projectDto));
+
+        await unitOfWork.CommitAsync();
+
+        return mapper.Map<ProjectDTO>(projectDto);
+    }
+
+    public async Task<ProjectDTO> Delete(int id)
+    {
+        var entity = await unitOfWork.ProjectRepository.GetAsync(p => p.Id == id)!;
+
+        _ = unitOfWork.ProjectRepository.Detele(entity);
 
         await unitOfWork.CommitAsync();
 
         return mapper.Map<ProjectDTO>(entity);
     }
-
-    public async Task<ProjectDTO> Delete(int id)
-    {
-        var project = await unitOfWork.ProjectRepository.GetAsync(p => p.Id == id)!;
-
-        var projectDeleted = unitOfWork.ProjectRepository.Detele(project);
-
-        await unitOfWork.CommitAsync();
-
-        return mapper.Map<ProjectDTO>(projectDeleted);
-    }
 }
+ 
