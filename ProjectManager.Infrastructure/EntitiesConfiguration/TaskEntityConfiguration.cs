@@ -12,8 +12,12 @@ public class TaskEntityConfiguration : IEntityTypeConfiguration<TaskModel>
 
         builder
             .HasOne(t => t.Project)
-            .WithMany(p => p.Tasks)
+            .WithMany(t => t.Tasks)
             .HasForeignKey(t => t.ProjectId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Property(t => t.CreateAt)
+            .HasDefaultValueSql("GETUTCDATE")
+            .ValueGeneratedOnAdd();
     }
 }

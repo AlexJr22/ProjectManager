@@ -56,7 +56,7 @@ public class TaskService(IUnitOfWork iunitOfWork, IMapper mapper) : ITaskService
     {
         var entity = await unitOfWork.TaskRepository.GetAsync(t => t.Id == id);
 
-        _ = unitOfWork.TaskRepository.Delete(entity);
+        _ = unitOfWork.TaskRepository.Delete(entity!);
 
         await unitOfWork.CommitAsync();
 

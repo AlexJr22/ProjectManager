@@ -51,7 +51,7 @@ public class ProjectService(IUnitOfWork unitOfWord, IMapper mapper) : IProjectSe
     {
         var entity = await unitOfWork.ProjectRepository.GetAsync(p => p.Id == id)!;
 
-        _ = unitOfWork.ProjectRepository.Detele(entity);
+        _ = unitOfWork.ProjectRepository.Delete(entity!);
 
         await unitOfWork.CommitAsync();
 

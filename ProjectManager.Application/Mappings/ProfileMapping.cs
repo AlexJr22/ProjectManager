@@ -1,8 +1,8 @@
-﻿using AutoMapper;
+﻿using System.Globalization;
+using AutoMapper;
 using ProjectManager.Application.DTOs.Project;
 using ProjectManager.Application.DTOs.Task;
 using ProjectManager.Domain.Entities;
-using System.Globalization;
 
 namespace ProjectManager.Application.Mappings;
 
@@ -14,7 +14,10 @@ public class ProfileMapping : Profile
         CreateMap<ProjectModel, ProjectDTO>()
             .ForMember(
                 dest => dest.CreateAt,
-                opt => opt.MapFrom(src => src.CreateAt.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture))
+                opt =>
+                    opt.MapFrom(
+                        src => src.CreateAt.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)
+                    )
             )
             .ReverseMap();
 
@@ -23,8 +26,16 @@ public class ProfileMapping : Profile
         CreateMap<UpdateProjectDTO, ProjectDTO>().ReverseMap();
 
         // task mapping
-        CreateMap<TaskDTO, TaskModel>()
+        CreateMap<TaskModel, TaskDTO>()
+            .ForMember(
+                dest => dest.CreateAt,
+                opt =>
+                    opt.MapFrom(
+                        src => src.CreateAt.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture)
+                    )
+            )
             .ReverseMap();
+
         CreateMap<TaskModel, CreatingTaskDTO>().ReverseMap();
         CreateMap<TaskModel, UpdateTaskDTO>().ReverseMap();
         CreateMap<UpdateTaskDTO, TaskDTO>().ReverseMap();

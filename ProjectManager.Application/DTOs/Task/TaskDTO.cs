@@ -7,4 +7,5 @@ public record class TaskDTO
     public string? TaskDescription { get; set; }
     public bool TaskStatus { get; set; }
     public int? ProjectId { get; set; }
+    public string? CreateAt { get; set; }
 }

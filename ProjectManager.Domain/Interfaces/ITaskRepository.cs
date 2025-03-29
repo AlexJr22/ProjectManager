@@ -1,13 +1,6 @@
-﻿using ProjectManager.Domain.Entities;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using ProjectManager.Domain.Entities;
 
 namespace ProjectManager.Domain.Interfaces;
 
-public interface ITaskRepository
-{
-    Task<TaskModel> GetAsync(Expression<Func<TaskModel, bool>> expression);
-    Task<IEnumerable<TaskModel>> GetAllAsync();
-    Task<TaskModel> CreateAsync(TaskModel entity);
-    TaskModel Update(TaskModel entity);
-    TaskModel Delete(TaskModel entity);
-}
+public interface ITaskRepository : IRepository<TaskModel> { }
