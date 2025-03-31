@@ -1,5 +1,4 @@
-﻿using ProjectManager.Domain.Entities;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace ProjectManager.Domain.Interfaces;
 
