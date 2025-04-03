@@ -25,6 +25,13 @@ public class ProjectService(IUnitOfWork unitOfWord, IMapper mapper) : IProjectSe
         return mapper.Map<ProjectDTO>(project);
     }
 
+    public async Task<ProjectWithTasksDTO?> GetProjectWithTasksAsync(int id)
+    {
+        var project = await unitOfWork.ProjectRepository.GetProjectWithTasksAsync(id);
+
+        return mapper.Map<ProjectWithTasksDTO?>(project);
+    }
+
     public async Task<ProjectDTO> CreateAsync(CreatingProjectDTO projectDTO)
     {
         var newProject = await unitOfWork

@@ -11,11 +11,11 @@ public class ProjectController(IProjectService projectService) : ControllerBase
     private readonly IProjectService projectService = projectService;
 
     [HttpGet("getAll")]
-    public async Task<IEnumerable<ProjectDTO>> GetAll()
+    public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetAll()
     {
         var projects = await projectService.GetAllAsync();
 
-        return projects;
+        return Ok(projects);
     }
 
     [HttpGet("getById/id/{id:int}")]
@@ -26,7 +26,18 @@ public class ProjectController(IProjectService projectService) : ControllerBase
         if (project is null)
             return NotFound();
 
-        return project;
+        return Ok(project);
+    }
+
+    [HttpGet("getProjectWithTask/id/{id:int}")]
+    public async Task<ActionResult<ProjectWithTasksDTO>> GetProjectWithTasks(int id)
+    {
+        var project = await projectService.GetProjectWithTasksAsync(id);
+
+        if (project is null)
+            return NotFound();
+
+        return Ok(project);
     }
 
     [HttpPost("createProject")]
@@ -37,7 +48,7 @@ public class ProjectController(IProjectService projectService) : ControllerBase
         if (project is null)
             return BadRequest();
 
-        return project;
+        return Ok(project);
     }
 
     [HttpPut("update/{id:int}")]
@@ -48,14 +59,14 @@ public class ProjectController(IProjectService projectService) : ControllerBase
         if (updatedProject is null)
             return BadRequest();
 
-        return updatedProject;
+        return Ok(updatedProject);
     }
 
     [HttpDelete("delete/{id:int}")]
-    public async Task<ProjectDTO> Delete(int id)
+    public async Task<ActionResult<ProjectDTO>> Delete(int id)
     {
         var deletedProject = await projectService.Delete(id);
 
-        return deletedProject;
+        return Ok(deletedProject);
     }
 }

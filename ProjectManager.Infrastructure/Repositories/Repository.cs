@@ -9,7 +9,7 @@ namespace ProjectManager.Infrastructure.Repositories;
 public class Repository<T>(AppDbContext context) : IRepository<T>
     where T : class
 {
-    private readonly AppDbContext appDbContext = context;
+    protected readonly AppDbContext appDbContext = context;
 
     public async Task<T?> GetAsync(Expression<Func<T, bool>> expression)
     {
