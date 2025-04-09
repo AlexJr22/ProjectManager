@@ -1,5 +1,4 @@
-﻿using ProjectManager.Application.Interfaces;
-using ProjectManager.Domain.Interfaces;
+﻿using ProjectManager.Domain.Interfaces;
 using ProjectManager.Infrastructure.Context;
 
 namespace ProjectManager.Infrastructure.Repositories;

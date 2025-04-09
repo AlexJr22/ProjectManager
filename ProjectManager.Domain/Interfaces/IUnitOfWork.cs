@@ -1,6 +1,4 @@
-﻿using ProjectManager.Domain.Interfaces;
-
-namespace ProjectManager.Application.Interfaces;
+﻿namespace ProjectManager.Domain.Interfaces;
 
 public interface IUnitOfWork
 {

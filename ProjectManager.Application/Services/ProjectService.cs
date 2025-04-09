@@ -3,6 +3,7 @@ using AutoMapper;
 using ProjectManager.Application.DTOs.Project;
 using ProjectManager.Application.Interfaces;
 using ProjectManager.Domain.Entities;
+using ProjectManager.Domain.Interfaces;
 
 namespace ProjectManager.Application.Services;
 
@@ -65,4 +66,3 @@ public class ProjectService(IUnitOfWork unitOfWord, IMapper mapper) : IProjectSe
         return mapper.Map<ProjectDTO>(entity);
     }
 }
- 
