@@ -2,13 +2,13 @@
 
 public static class Mapper
 {
-    public static Target Map<Target, Souce>(Souce souce)
-        where Target : new()
+    public static TTarget Map<TTarget, TSouce>(TSouce souce)
+        where TTarget : new()
     {
-        var target = new Target();
+        var target = new TTarget();
 
-        var souceProperty = typeof(Souce).GetProperties();
-        var targetProperty = typeof(Target).GetProperties();
+        var souceProperty = typeof(TSouce).GetProperties();
+        var targetProperty = typeof(TTarget).GetProperties();
 
         foreach (var property in souceProperty)
         {
@@ -24,5 +24,14 @@ public static class Mapper
         }
 
         return target;
+    }
+
+    public static IEnumerable<TTarget> Map<TTarget, TSource>(IEnumerable<TSource> sourceList)
+        where TTarget : new()
+    {
+        foreach (var item in sourceList)
+        {
+            yield return Map<TTarget, TSource>(item);
+        }
     }
 }
