@@ -7,6 +7,7 @@ using ProjectManager.Domain.Interfaces;
 using ProjectManager.Infrastructure.Context;
 using ProjectManager.Infrastructure.Repositories;
 
+
 namespace ProjectManager.CrossCutting.Ioc;
 
 public static class AddInfrastructure
@@ -18,12 +19,11 @@ public static class AddInfrastructure
     {
         services.AddDbContext<AppDbContext>(options => options.UseSqlServer(strConnection));
 
-        services.AddAutoMapper(typeof(ProfileMapping).Assembly);
-
         services.AddScoped<IProjectService, ProjectService>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
         services.AddScoped<ITaskService, TaskService>();
         services.AddScoped<ITaskRepository, TaskRepository>();
+
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
