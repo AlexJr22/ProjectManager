@@ -9,14 +9,15 @@ public sealed class ProjectModel
 
     // public ICollection<UserModel>? Users { get; private set; }
 
-    private ProjectModel()
+    public ProjectModel()
     {
         CreateAt = DateTime.UtcNow;
     }
 
-    public ProjectModel(string projectName, ICollection<TaskModel>? tasks)
+    public ProjectModel(string projectName, ICollection<TaskModel>? tasks, int id)
     {
         ProjectName = NameValidation(projectName);
+        Id = id;
         CreateAt = DateTime.UtcNow;
         Tasks = tasks;
     }
