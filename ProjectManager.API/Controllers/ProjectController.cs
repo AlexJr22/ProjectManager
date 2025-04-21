@@ -24,7 +24,7 @@ public class ProjectController(IProjectService projectService) : ControllerBase
         var project = await projectService.GetAsync(p => p.Id == id);
 
         if (project is null)
-            return NotFound();
+            return NotFound("Object Not Found");
 
         return Ok(project);
     }
@@ -35,7 +35,7 @@ public class ProjectController(IProjectService projectService) : ControllerBase
         var project = await projectService.GetProjectWithTasksAsync(id);
 
         if (project is null)
-            return NotFound();
+            return NotFound("Object Not Found");
 
         return Ok(project);
     }

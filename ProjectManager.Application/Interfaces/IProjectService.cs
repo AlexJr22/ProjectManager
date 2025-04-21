@@ -7,7 +7,7 @@ namespace ProjectManager.Application.Interfaces;
 public interface IProjectService
 {
     Task<IEnumerable<ProjectDTO>> GetAllAsync();
-    Task<ProjectDTO> GetAsync(Expression<Func<ProjectModel, bool>> expression);
+    Task<ProjectDTO?> GetAsync(Expression<Func<ProjectModel, bool>> expression);
 
     Task<ProjectWithTasksDTO?> GetProjectWithTasksAsync(int id);
     Task<ProjectDTO> CreateAsync(CreatingProjectDTO entity);

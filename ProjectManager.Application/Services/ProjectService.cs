@@ -1,68 +1,78 @@
 ﻿using System.Linq.Expressions;
-using AutoMapper;
 using ProjectManager.Application.DTOs.Project;
 using ProjectManager.Application.Interfaces;
+using ProjectManager.Application.Mappings;
 using ProjectManager.Domain.Entities;
 using ProjectManager.Domain.Interfaces;
 
 namespace ProjectManager.Application.Services;
 
-public class ProjectService(IUnitOfWork unitOfWord, IMapper mapper) : IProjectService
+public class ProjectService(IUnitOfWork unitOfWord) : IProjectService
 {
-    private readonly IMapper mapper = mapper;
     private readonly IUnitOfWork unitOfWork = unitOfWord;
 
     public async Task<IEnumerable<ProjectDTO>> GetAllAsync()
     {
         var projects = await unitOfWork.ProjectRepository.GetAllAsync();
 
-        return mapper.Map<IEnumerable<ProjectDTO>>(projects);
+        return Mapper.Map<ProjectDTO, ProjectModel>(projects);
     }
 
-    public async Task<ProjectDTO> GetAsync(Expression<Func<ProjectModel, bool>> expression)
+    public async Task<ProjectDTO?> GetAsync(Expression<Func<ProjectModel, bool>> expression)
     {
         var project = await unitOfWork.ProjectRepository.GetAsync(expression)!;
 
-        return mapper.Map<ProjectDTO>(project);
+        if (project is not null)
+            return Mapper.Map<ProjectDTO, ProjectModel>(project!);
+
+        return null;
     }
 
     public async Task<ProjectWithTasksDTO?> GetProjectWithTasksAsync(int id)
     {
         var project = await unitOfWork.ProjectRepository.GetProjectWithTasksAsync(id);
 
-        return mapper.Map<ProjectWithTasksDTO?>(project);
+        if (project is not null)
+            return Mapper.Map<ProjectWithTasksDTO, ProjectModel>(project!);
+
+        return null;
     }
 
     public async Task<ProjectDTO> CreateAsync(CreatingProjectDTO projectDTO)
     {
         var newProject = await unitOfWork
             .ProjectRepository
-            .CreateAsync(mapper.Map<ProjectModel>(projectDTO));
+            .CreateAsync(Mapper.Map<ProjectModel, CreatingProjectDTO>(projectDTO));
 
         await unitOfWork.CommitAsync();
 
-        return mapper.Map<ProjectDTO>(newProject);
+        return Mapper.Map<ProjectDTO, ProjectModel>(newProject);
     }
 
     public async Task<ProjectDTO> Update(UpdateProjectDTO entity, int id)
     {
-        var projectDto = new ProjectDTO { Id = id, ProjectName = entity.ProjectName };
+        var project = new ProjectModel(entity.ProjectName!, id);
 
-        _ = unitOfWork.ProjectRepository.Update(mapper.Map<ProjectModel>(projectDto));
+        var updatedProject = unitOfWork.ProjectRepository.Update(project);
 
         await unitOfWork.CommitAsync();
 
-        return mapper.Map<ProjectDTO>(projectDto);
+        return Mapper.Map<ProjectDTO, ProjectModel>(updatedProject);
     }
 
     public async Task<ProjectDTO> Delete(int id)
     {
-        var entity = await unitOfWork.ProjectRepository.GetAsync(p => p.Id == id)!;
+        var entity = await unitOfWork.ProjectRepository.GetAsync(p => p.Id == id);
 
-        _ = unitOfWork.ProjectRepository.Delete(entity!);
+        if (entity is not null)
+        {
+            _ = unitOfWork.ProjectRepository.Delete(entity!);
 
-        await unitOfWork.CommitAsync();
+            await unitOfWork.CommitAsync();
 
-        return mapper.Map<ProjectDTO>(entity);
+            return Mapper.Map<ProjectDTO, ProjectModel>(entity!);
+        }
+
+        return new();
     }
 }

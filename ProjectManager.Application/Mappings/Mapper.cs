@@ -30,7 +30,7 @@ public static class Mapper
                     .GetMethod(nameof(MapList), BindingFlags.NonPublic | BindingFlags.Static)!
                     .MakeGenericMethod(targetItemType, sourceItemType);
 
-                var mappedList = method.Invoke(null, new object[] { sourceValue! });
+                var mappedList = method.Invoke(null, [ sourceValue! ]);
                 targetProp.SetValue(target, mappedList);
             }
             else if (targetProp.PropertyType == sourceProp.PropertyType)

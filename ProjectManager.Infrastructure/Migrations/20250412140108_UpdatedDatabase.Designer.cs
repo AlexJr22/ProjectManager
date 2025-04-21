@@ -12,8 +12,8 @@ using ProjectManager.Infrastructure.Context;
 namespace ProjectManager.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250317220524_initial")]
-    partial class initial
+    [Migration("20250412140108_UpdatedDatabase")]
+    partial class UpdatedDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,9 @@ namespace ProjectManager.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ProjectName")
                         .HasColumnType("nvarchar(max)");
 
@@ -49,6 +52,9 @@ namespace ProjectManager.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("ProjectId")
                         .HasColumnType("int");
 
@@ -56,7 +62,6 @@ namespace ProjectManager.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaskName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TaskStatus")

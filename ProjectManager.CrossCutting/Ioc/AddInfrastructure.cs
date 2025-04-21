@@ -1,12 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectManager.Application.Interfaces;
-using ProjectManager.Application.Mappings;
 using ProjectManager.Application.Services;
 using ProjectManager.Domain.Interfaces;
 using ProjectManager.Infrastructure.Context;
 using ProjectManager.Infrastructure.Repositories;
-
 
 namespace ProjectManager.CrossCutting.Ioc;
 

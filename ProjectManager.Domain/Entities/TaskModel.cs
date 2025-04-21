@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace ProjectManager.Domain.Entities;
+﻿namespace ProjectManager.Domain.Entities;
 
 public sealed class TaskModel
 {
@@ -8,11 +6,11 @@ public sealed class TaskModel
     public string? TaskName { get; private set; }
     public string? TaskDescription { get; private set; }
     public bool TaskStatus { get; private set; }
-    public DateTime CreateAt { get; private set; }
     public int? ProjectId { get; private set; }
+    public DateTime CreateAt { get; private set; }
     public ProjectModel? Project { get; private set; }
 
-    private TaskModel()
+    public TaskModel()
     {
         CreateAt = DateTime.UtcNow;
     }

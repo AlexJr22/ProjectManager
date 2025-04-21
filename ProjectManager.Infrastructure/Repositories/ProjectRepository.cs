@@ -11,7 +11,10 @@ public class ProjectRepository(AppDbContext DbContext)
 {
     public async Task<ProjectModel?> GetProjectWithTasksAsync(int id)
     {
-       var project = await appDbContext.Projects.Include(p => p.Tasks).FirstOrDefaultAsync(p => p.Id == id);
+        var project = await appDbContext
+            .Projects
+            .Include(p => p.Tasks)
+            .FirstOrDefaultAsync(p => p.Id == id);
 
         return project;
     }

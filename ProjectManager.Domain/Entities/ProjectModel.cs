@@ -14,6 +14,12 @@ public sealed class ProjectModel
         CreateAt = DateTime.UtcNow;
     }
 
+    public ProjectModel(string projectName, int id)
+    {
+        ProjectName = projectName;
+        Id = id;
+    }
+
     public ProjectModel(string projectName, ICollection<TaskModel>? tasks, int id)
     {
         ProjectName = NameValidation(projectName);
