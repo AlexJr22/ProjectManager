@@ -6,9 +6,14 @@ namespace ProjectManager.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class TaskController(ITaskService ItaskService) : ControllerBase
+public class TaskController : ControllerBase
 {
-    private readonly ITaskService taskService = ItaskService;
+    public TaskController(ITaskService service)
+    {
+        taskService = service;
+    }
+
+    private readonly ITaskService taskService;
 
     [HttpGet("getAllTask")]
     public async Task<ActionResult<IEnumerable<TaskDTO>>> GetAllTask()

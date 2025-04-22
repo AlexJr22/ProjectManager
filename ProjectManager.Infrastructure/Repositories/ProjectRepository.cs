@@ -5,10 +5,11 @@ using ProjectManager.Infrastructure.Context;
 
 namespace ProjectManager.Infrastructure.Repositories;
 
-public class ProjectRepository(AppDbContext DbContext)
-    : Repository<ProjectModel>(DbContext),
-        IProjectRepository
+public class ProjectRepository : Repository<ProjectModel>, IProjectRepository
 {
+    public ProjectRepository(AppDbContext context)
+        : base(context) { }
+
     public async Task<ProjectModel?> GetProjectWithTasksAsync(int id)
     {
         var project = await appDbContext

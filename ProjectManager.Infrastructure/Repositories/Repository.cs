@@ -1,15 +1,19 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using ProjectManager.Domain.Entities;
 using ProjectManager.Domain.Interfaces;
 using ProjectManager.Infrastructure.Context;
 
 namespace ProjectManager.Infrastructure.Repositories;
 
-public class Repository<T>(AppDbContext context) : IRepository<T>
+public class Repository<T> : IRepository<T>
     where T : class
 {
-    protected readonly AppDbContext appDbContext = context;
+    public Repository(AppDbContext context)
+    {
+        appDbContext = context;
+    }
+
+    protected readonly AppDbContext appDbContext;
 
     public async Task<T?> GetAsync(Expression<Func<T, bool>> expression)
     {

@@ -6,9 +6,14 @@ namespace ProjectManager.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ProjectController(IProjectService projectService) : ControllerBase
+public class ProjectController : ControllerBase
 {
-    private readonly IProjectService projectService = projectService;
+    public ProjectController(IProjectService service)
+    {
+        projectService = service;
+    }
+
+    private readonly IProjectService projectService;
 
     [HttpGet("getAll")]
     public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetAll()

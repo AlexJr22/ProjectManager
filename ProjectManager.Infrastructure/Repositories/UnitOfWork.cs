@@ -3,9 +3,14 @@ using ProjectManager.Infrastructure.Context;
 
 namespace ProjectManager.Infrastructure.Repositories;
 
-public class UnitOfWork(AppDbContext DbContext) : IUnitOfWork
+public class UnitOfWork : IUnitOfWork
 {
-    private readonly AppDbContext context = DbContext;
+    public UnitOfWork(AppDbContext dbContext)
+    {
+        context = dbContext;
+    }
+
+    private readonly AppDbContext context;
     IProjectRepository? _projectRepository;
     ITaskRepository? _taskRepository;
 
