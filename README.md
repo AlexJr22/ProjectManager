@@ -25,7 +25,7 @@
 
 ![Task Controller](README.IMGS/taskController.png)
 
-- `Generic Repository`
+**Generic Repository**
 
 ![Repository](README.IMGS/repository.png)
 
